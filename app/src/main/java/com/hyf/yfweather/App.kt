@@ -11,7 +11,7 @@ import android.content.Context
 class App : Application() {
     companion object{
         //这是彩云api的token，类似于appkey
-        const val TOKEN = "BNBRvBveaD2VfHVI"
+        const val TOKEN = "3MAZAfDuByFQPBXi"
         lateinit var context: Context
     }
 
