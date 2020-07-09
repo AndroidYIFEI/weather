@@ -1,6 +1,8 @@
 package com.hyf.yfweather.logic
 
 import androidx.lifecycle.liveData
+import com.hyf.yfweather.logic.dao.PlaceDao
+import com.hyf.yfweather.logic.model.Place
 import com.hyf.yfweather.logic.model.Weather
 import com.hyf.yfweather.logic.network.YfWeatherNetwork
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,12 @@ import kotlin.coroutines.CoroutineContext
  * description: 仓库层：主要是判断调用方请求数据应该是从网络获取，还是从本地获取， 然后获取到数据返回给调用方
  */
 object Repository {
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+
     fun searchPlaces(query: String) = fire(Dispatchers.IO) {
         val placeResponse = YfWeatherNetwork.searchPlaces(query)
         if (placeResponse.status == "ok") {
