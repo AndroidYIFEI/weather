@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hyf.yfweather.R
 import com.hyf.yfweather.logic.model.Place
 import com.hyf.yfweather.ui.weather.WeatherActivity
+import kotlinx.android.synthetic.main.activity_weather.*
 
 /**
  * author: 黄益飞
@@ -29,14 +30,24 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
         holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val place = placeList[position]
-            val intent = Intent(parent.context, WeatherActivity::class.java).apply {
-                putExtra("location_lng", place.location.lng)
-                putExtra("location_lat", place.location.lat)
-                putExtra("place_name", place.name)
+            val activity = fragment.activity
+            if (activity is WeatherActivity) {
+                activity.drawerLayout.closeDrawers()
+                activity.viewmodel.locationLng = place.location.lng
+                activity.viewmodel.locationLat = place.location.lat
+                activity.viewmodel.placeName = place.name
+                activity.refreshWeather()
+
+            } else {
+                val intent = Intent(parent.context, WeatherActivity::class.java).apply {
+                    putExtra("location_lng", place.location.lng)
+                    putExtra("location_lat", place.location.lat)
+                    putExtra("place_name", place.name)
+                }
+                fragment.startActivity(intent)
+                fragment.activity?.finish()
             }
             fragment.viewModel.savePlace(place)
-            fragment.startActivity(intent)
-            fragment.activity?.finish()
         }
         return holder
     }
