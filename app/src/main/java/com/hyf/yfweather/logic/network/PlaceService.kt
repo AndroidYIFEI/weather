@@ -9,7 +9,7 @@ import retrofit2.http.Query
 /**
  * author: 黄益飞
  * created on: 2020/7/6 10:54
- * description:
+ * description: 城市的网络服务
  */
 interface PlaceService {
     /**
